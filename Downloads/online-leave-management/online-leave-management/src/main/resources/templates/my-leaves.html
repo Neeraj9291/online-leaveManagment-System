@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>My Leave Requests</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 80%;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+
+<h1>My Leave Requests</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Reason</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="leave : ${leaves}">
+            <td th:text="${leave.employeeName}">Name</td>
+            <td th:text="${leave.startDate}">Start Date</td>
+            <td th:text="${leave.endDate}">End Date</td>
+            <td th:text="${leave.reason}">Reason</td>
+            <td th:text="${leave.status}"
+                th:style="'color:' + 
+                    (${leave.status} == 'APPROVED' ? 'green' : 
+                    (${leave.status} == 'REJECTED' ? 'red' : 'orange'))">
+                Status
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<br/>
+<a href="/leave/apply">Apply for New Leave</a>
+
+</body>
+</html>

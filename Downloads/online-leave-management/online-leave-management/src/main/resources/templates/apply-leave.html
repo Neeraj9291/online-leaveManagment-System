@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Apply Leave</title>
+</head>
+<body>
+    <h1>Apply for Leave</h1>
+
+    <form th:action="@{/leave/submit}" method="post">
+        <label for="name">Name:</label>
+        <input type="text" name="name" required><br><br>
+
+        <label for="days">Number of Days:</label>
+        <input type="number" name="days" min="1" required><br><br>
+
+        <label for="reason">Reason:</label>
+        <textarea name="reason"></textarea><br><br>
+
+        <button type="submit">Submit Leave</button>
+    </form>
+
+    <br>
+    <a href="/my-leaves">View My Leaves</a>
+</body>
+</html>

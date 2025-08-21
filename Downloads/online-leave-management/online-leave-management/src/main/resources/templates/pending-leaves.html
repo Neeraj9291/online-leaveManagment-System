@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>My Leave Requests</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f1f1f1;
+        }
+
+        .text-success {
+            color: green;
+            font-weight: bold;
+        }
+
+        .text-danger {
+            color: red;
+            font-weight: bold;
+        }
+
+        .text-warning {
+            color: orange;
+            font-weight: bold;
+        }
+
+        .btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            margin: 2px;
+        }
+
+        .btn-approve {
+            background-color: green;
+            color: white;
+        }
+
+        .btn-reject {
+            background-color: red;
+            color: white;
+        }
+
+        .btn-approve:hover {
+            background-color: darkgreen;
+        }
+
+        .btn-reject:hover {
+            background-color: darkred;
+        }
+    </style>
+</head>
+<body>
+    <h1>My Leave Requests</h1>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Reason</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="leave : ${leaves}">
+            <td th:text="${leave.employeeName}">Name</td>
+            <td th:text="${leave.startDate}">Start Date</td>
+            <td th:text="${leave.endDate}">End Date</td>
+            <td th:text="${leave.reason}">Reason</td>
+            <td>
+                <span th:text="${leave.status}"
+                      th:classappend="${leave.status} == 'APPROVED' ? 'text-success' :
+                                     (leave.status == 'REJECTED' ? 'text-danger' : 'text-warning')">
+                </span>
+            </td>
+            <td>
+                <!-- Show Approve/Reject buttons only if status is PENDING -->
+                <form th:if="${leave.status == 'PENDING'}"
+                      th:action="@{'/leave/approve/' + ${leave.id}}"
+                      method="post" style="display:inline;">
+                    <button type="submit" class="btn btn-approve">Approve</button>
+                </form>
+
+                <form th:if="${leave.status == 'PENDING'}"
+                      th:action="@{'/leave/reject/' + ${leave.id}}"
+                      method="post" style="display:inline;">
+                    <button type="submit" class="btn btn-reject">Reject</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <br>
+    <a href="/leave/apply">Apply for New Leave</a>
+</body>
+</html>
