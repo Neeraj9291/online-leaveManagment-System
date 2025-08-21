@@ -1,0 +1,6 @@
+*.log
+*.class
+.idea/
+*.iml
+node_modules/
+.env
